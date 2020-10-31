@@ -1,0 +1,140 @@
+
+
+FOOD FEST (100 MARKS)
+
+A food fest is organised at the JLN stadium. The stalls from different states and cities have been set up. To make the fest more interesting, multiple games have been arranged which can be played by the people to win the food vouchers. One such game to win the food vouchers is described below:
+
+There are N number of boxes arranged in a single queue. Each box has an integer I written on it. From the given queue, the participant has to select two contiguous subsequences A and B of the same size. The selected subsequences should be such that the summation of the product of the boxes should be maximum. The product is not calculated normally though. To make the game interesting, the first box of subsequence A is to be multiplied by the last box of subsequence B. The second box of subsequence A is to be multiplied by the second last box of subsequence B and so on. All the products thus obtained are then added together.
+
+If the participant is able to find the correct such maximum summation, he/she will win the game and will be awarded the food voucher of the same value.
+
+Note: The subsequences A and B should be disjoint.
+
+Example:
+
+Number of boxes, N = 8
+
+The order of the boxes is provided below:
+
+
+Subsequence A
+
+
+Subsequence B
+
+
+The product of the subsequences will be calculated as below:
+
+
+P1 = 9 * 8 = 72
+
+P2 = 2 * 7 = 14
+
+P3 = 3 * 6 = 18
+
+Summation, S = P1 + P2 + P3 = 72 + 14 + 18 = 104
+
+This is the maximum summation possible as per the requirement for the given N boxes.
+
+Tamanna is also in the fest and wants to play this game. She needs help in winning the game and is asking for your help. Can you help her in winning the food vouchers? 
+
+
+Input Format
+
+The first line of input consists of the number of boxes, N.
+
+The second line of input consists of N space-separated integers.
+
+
+Constraints
+
+1< N <=3000
+-106 <= I <=106
+
+Output Format
+Print the maximum summation of the product of the boxes in a separate line.
+
+Sample TestCase 1
+Input
+8
+1 9 2 3 0 6 7 8
+Output
+104
+Explanation
+
+As explained in the example above.
+
+Explanation;
+
+/*Enter your code here. Read input from STDIN. Print your output to STDOUT*/
+#include <iostream>
+using namespace std;
+int main()
+{
+
+int n;
+std::cin >> n;
+int arr[n];
+for(int i=0;i<n;i++) 
+    std::cin>>arr[i];
+int dp[n][n];
+for(int i=0;i<n;i++)
+{
+    for(int j=0;j<n;j++)
+    {
+
+        if(j==i) 
+            dp[i][j]=0;
+        else if(j<i)
+            dp[i][j]=0;
+        else 
+            dp[i][j]=arr[i]*arr[j];
+    }
+
+}
+
+for(int i=0;i<n;i++)
+   {
+       for(int j=0;j<n;j++)
+            //std::cout<<
+            dp[i][j];
+        //std::cout<<std::endl;
+    }
+
+    //std::cout<<std::endl;
+//find max sum diagonal
+long long int global_sum=0;
+
+//get sum of diagonal increasing i
+for(int i=0;i<n;i++)
+{
+    long long int curr_sum=0;
+    int j=i;
+    int k=n-1;
+    while(k>=0 && j<n){
+        curr_sum+=dp[j][k];
+        k--;
+        j++;
+    }
+    if(curr_sum>global_sum) global_sum=curr_sum;
+
+}
+//get sum with decreasing i
+for(int i=n-1;i>=0;i--){
+    long long int curr_sum=0;
+    int j=i;
+    int k=0;
+    while(k<n && j>=0){
+        curr_sum+=dp[j][k];
+        j--;
+        k++;
+    }
+    if(curr_sum>global_sum) global_sum=curr_sum;
+}
+
+std::cout<<global_sum;
+    
+}
+
+
+
